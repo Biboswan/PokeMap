@@ -34,5 +34,8 @@ Meteor.methods({
       longitude: long,
       latitude: lat
     });
+  },
+  "pokemon.sub": x => {
+    return Pokemon.remove(x);
   }
 });

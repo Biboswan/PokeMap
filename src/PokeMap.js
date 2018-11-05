@@ -327,6 +327,7 @@ class PokeMap extends React.Component {
   };
 
   renderPokemon = () => {
+    console.log("mapview");
     return this.props.pokemon.map(p => {
       return (
         <MapView.Marker
@@ -334,12 +335,25 @@ class PokeMap extends React.Component {
           key={p._id}
         >
           <Image
-            source={{ uri: `http://localhost:3000/${p.image}` }}
+            source={{ uri: "http://localhost:3000/" + p.image }}
             style={{ height: 50, width: 50 }}
           />
         </MapView.Marker>
       );
     });
+  };
+
+  removePokemon = () => {
+    if (this.props.pokemon.length === 0) return;
+    const remove = this.props.pokemon[0]._id;
+    Meteor.call("pokemon.sub", remove, (err, res) => {
+      console.log("remove function", err, res);
+    });
+  };
+
+  logout = () => {
+    Meteor.logout();
+    this.props.flipLogin(false);
   };
 
   render() {
@@ -352,7 +366,7 @@ class PokeMap extends React.Component {
             <Text>PokeMap</Text>
           </Body>
           <Right>
-            <Button transparent>
+            <Button transparent onPress={this.logout}>
               <Icon name="power" />
             </Button>
           </Right>
@@ -371,6 +385,7 @@ class PokeMap extends React.Component {
           direction="up"
           postition="bottomRight"
           style={{ backgroundColor: "red" }}
+          onPress={this.removePokemon}
         >
           <Icon name="remove" />
         </Fab>

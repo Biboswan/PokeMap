@@ -43,7 +43,7 @@ export default class App extends React.Component {
     if (!this.state.loggedIn) {
       return <SignIn signIn={this.signIn} />;
     } else {
-      return <PokeMap />;
+      return <PokeMap flipLogin={this.flipLogin} />;
     }
   };
 
